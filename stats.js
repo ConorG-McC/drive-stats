@@ -1,14 +1,13 @@
 require('dotenv').config();
+const fs = require('fs'); // Import the fs module
+const path = require('path'); // Import the path module for better path management
 
 async function getToken() {
-  const tokenEndpoint = 'https://api.drivvo.com/autenticacao/loginFacebook';
+  const tokenEndpoint = 'https://api.drivvo.com/autenticacao/login';
 
   const body = JSON.stringify({
-    nome: process.env.FACEBOOK_NAME,
-    sobrenome: process.env.FACEBOOK_SURNAME,
-    facebook_id: process.env.FACEBOOK_ID,
-    email: process.env.FACEBOOK_EMAIL,
-    facebook_token: process.env.FACEBOOK_TOKEN,
+    email: process.env.DRIVVO_EMAIL,
+    senha: process.env.DRIVVO_PASSWORD,
     idioma: 'en',
   });
 
@@ -32,6 +31,17 @@ async function getToken() {
   }
 }
 
+async function saveJsonToFile(filename, data) {
+  const filePath = path.join(__dirname, filename); // Use path to join directory name and filename
+  fs.writeFile(filePath, JSON.stringify(data, null, 2), (err) => {
+    if (err) {
+      console.error(`Failed to save ${filename}:`, err);
+    } else {
+      console.log(`${filename} has been saved.`);
+    }
+  });
+}
+
 async function getVehicles(token) {
   const vehicleEndpoint = 'https://api.drivvo.com/veiculo/web';
 
@@ -47,6 +57,7 @@ async function getVehicles(token) {
     const response = await fetch(vehicleEndpoint, requestOptions);
     const result = await response.json();
     console.log(result);
+    await saveJsonToFile('vehicles.json', result); // Save result to file
   } catch (error) {
     console.error(error);
   }
@@ -68,6 +79,7 @@ async function getFuellingEntries(token) {
     const response = await fetch(fuellingEndpoint, requestOptions);
     const result = await response.json();
     console.log(result);
+    await saveJsonToFile('fuellingEntries.json', result); // Save result to file
   } catch (error) {
     console.error(error);
   }
@@ -89,6 +101,7 @@ async function getServicingEntries(token) {
     const response = await fetch(servicingEndpoint, requestOptions);
     const result = await response.json();
     console.log(result);
+    await saveJsonToFile('servicingEntries.json', result); // Save result to file
   } catch (error) {
     console.error(error);
   }

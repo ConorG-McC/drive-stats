@@ -1,6 +1,6 @@
 # drivvo-stats
 
-This is a tool for managing drivvo vehicle data like fetching vehicle info, fueling entries, and servicing records from Drivvo API. It supports filtering by vehicle plate and saving data to JSON files.
+This is a tool for managing Drivvo vehicle data, such as fetching vehicle information, fueling entries, and servicing records from the Drivvo API. It supports filtering by vehicle plate and saving data to JSON files.
 
 ## Quick Start
 
@@ -17,10 +17,10 @@ npm install
 
 ### Config
 1. Create a `.env` in the root:
-    ```
-    DRIVVO_EMAIL=
-    DRIVVO_PASSWORD= // this is your hashed    
-    ```
+```
+DRIVVO_EMAIL=
+DRIVVO_PASSWORD= // this is your hashed password   
+```
 
 ### Run the App
 ```bash
@@ -40,7 +40,7 @@ npm start
   ```bash
   npm start -- -o
   ```
-  Defaults to `false`.
+  Defaults to `false` if ommitted.
 
 ### Examples
 - **Run with default settings**:

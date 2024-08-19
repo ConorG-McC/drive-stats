@@ -1,5 +1,7 @@
-export async function getToken() {
-  const tokenEndpoint = 'https://api.drivvo.com/autenticacao/login';
+import { config } from '../config/config.js';
+
+export async function login() {
+  const tokenEndpoint = `${config.baseUrl}${config.loginEndpoint}`;
 
   const body = JSON.stringify({
     email: process.env.DRIVVO_EMAIL,

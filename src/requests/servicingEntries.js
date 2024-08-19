@@ -1,6 +1,8 @@
-export async function getServicingEntries(token) {
-  const servicingEndpoint =
-    'https://api.drivvo.com/veiculo/4818022/servico/web';
+import { args, config } from '../config/config.js';
+import { saveJsonToFile } from '../utilities/util.js';
+
+export async function getServicingEntries(token, vehicleId) {
+  const servicingEndpoint = `${config.baseUrl}/veiculo/${vehicleId}${config.servicingEndpoint}`;
 
   const requestOptions = {
     method: 'GET',
@@ -14,7 +16,9 @@ export async function getServicingEntries(token) {
     const response = await fetch(servicingEndpoint, requestOptions);
     const result = await response.json();
     console.log(result);
-    // await saveJsonToFile('servicingEntries.json', result);
+    if (args.output) {
+      await saveJsonToFile('servicingEntries.json', result);
+    }
   } catch (error) {
     console.error(error);
   }
